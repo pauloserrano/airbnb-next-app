@@ -132,7 +132,7 @@ export default function Modal({ isOpen, onClose, onSubmit, title, body, footer, 
                   <IoMdClose size={18}/>
                 </button>
                 <h3 className="text-lg font-semibold">
-                  {title}asd
+                  {title}
                 </h3>
               </header>
               <section className="relative p-6 flex-auto">
@@ -152,9 +152,9 @@ export default function Modal({ isOpen, onClose, onSubmit, title, body, footer, 
                     disabled={disabled}
                     label={actionLabel}
                     onClick={handleSubmit}
-                    
                   />
                 </div>
+                {footer}
               </footer>
             </article>
           </div>
