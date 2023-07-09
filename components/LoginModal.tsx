@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { AiFillGithub } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
-import axios from "axios"
 import { toast } from "react-hot-toast"
 import { signIn } from "next-auth/react"
 import useRegisterModal from "@/hooks/useRegisterModal"
@@ -34,10 +33,10 @@ export default function LoginModal() {
     }
   })
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = ({ email, password }) => {
     setIsLoading(true)
 
-    signIn("credentials", { ...data, redirect: false })
+    signIn("credentials", { email, password, redirect: false })
       .then(callback => {
         setIsLoading(false)
 
@@ -87,13 +86,13 @@ export default function LoginModal() {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button 
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row justify-center gap-2">
