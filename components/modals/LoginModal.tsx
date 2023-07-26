@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useRouter } from "next/navigation"
 import { AiFillGithub } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
@@ -10,9 +10,9 @@ import { signIn } from "next-auth/react"
 import useRegisterModal from "@/hooks/useRegisterModal"
 import useLoginModal from "@/hooks/useLoginModal"
 import Modal from "./Modal"
-import Heading from "./Heading"
-import Input from "./Input"
-import Button from "./Button"
+import Heading from "../Heading"
+import Input from "../Input"
+import Button from "../Button"
 
 export default function LoginModal() {
   const router = useRouter()
@@ -51,6 +51,11 @@ export default function LoginModal() {
         }
       })
   }
+
+  const toggleModal = useCallback(() => {
+    loginModal.onClose()
+    registerModal.onOpen()
+  }, [registerModal, loginModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -96,12 +101,12 @@ export default function LoginModal() {
       />
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="flex flex-row justify-center gap-2">
-          <div>Already have an account?</div>
+          <div>First time?</div>
           <div 
             className="text-neutral-800 cursor-pointer hover:underline"
-            onClick={registerModal.onClose}
+            onClick={toggleModal}
           >
-            Log in
+            Sign up
           </div>
         </div>
       </div>

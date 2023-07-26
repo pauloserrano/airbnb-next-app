@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { IoMdClose } from "react-icons/io"
-import Button from "./Button"
+import Button from "../Button"
 
 interface ModalProps {
   isOpen: boolean
@@ -18,7 +18,7 @@ interface ModalProps {
 }
 
 export default function Modal({ isOpen, onClose, onSubmit, title, body, footer, actionLabel, disabled, secondaryAction, secondaryActionLabel }: ModalProps) {
-  const [showModal, setShowModal] = useState(isOpen)
+  const [showModal, setShowModal] = useState<boolean>(isOpen)
 
   useEffect(() => {
     setShowModal(isOpen)

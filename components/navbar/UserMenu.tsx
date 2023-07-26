@@ -4,10 +4,11 @@ import { useCallback, useState } from "react"
 import { AiOutlineMenu } from "react-icons/ai"
 import { signOut } from "next-auth/react"
 
-import Avatar from "./Avatar"
-import MenuItem from "./MenuItem"
+import Avatar from "../Avatar"
+import MenuItem from "../MenuItem"
 import useRegisterModal from "@/hooks/useRegisterModal"
 import useLoginModal from "@/hooks/useLoginModal"
+import useRentModal from "@/hooks/useRentModal"
 import { SafeUser } from "@/types"
 
 interface UserMenuProps {
@@ -17,17 +18,27 @@ interface UserMenuProps {
 export default function UserMenu({ currentUser }: UserMenuProps) {
   const registerModal = useRegisterModal()
   const loginModal = useLoginModal()
+  const rentModal = useRentModal()
   const [isOpen, setIsOpen] = useState(false)
   
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value)
   }, [])
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen()
+    }
+
+    rentModal.onOpen()
+
+  }, [currentUser, loginModal, rentModal])
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className="
             hidden
             md:block
@@ -103,7 +114,7 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
                   label="My Properties"
                 />
                 <MenuItem
-                  onClick={() => {}}
+                  onClick={rentModal.onOpen}
                   label="Airbnb My Home"
                 />
                 <hr />
